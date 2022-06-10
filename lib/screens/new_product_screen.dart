@@ -58,6 +58,7 @@ class NewProductScreen extends StatelessWidget {
                                 (_) => imageUrl,
                                 ifAbsent: () => imageUrl,
                               );
+                              // ignore: avoid_print
                               print(productController.newProduct['imageUrl']);
                             }
                           },
