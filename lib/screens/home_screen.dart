@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'screens.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
 class HomeScreen extends StatelessWidget {

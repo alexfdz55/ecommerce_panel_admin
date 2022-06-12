@@ -15,6 +15,8 @@ class NewProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> categories = ['Smoothies', 'Soft Drinks', 'Water'];
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -80,17 +82,27 @@ class NewProductScreen extends StatelessWidget {
                   'Product Information',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
-                _buildTextFormField('Product ID', 'id', productController),
                 _buildTextFormField('Product Name', 'name', productController),
                 _buildTextFormField(
                   'Product Description',
                   'description',
                   productController,
                 ),
-                _buildTextFormField(
-                  'Product Category',
-                  'category',
-                  productController,
+                DropdownButtonFormField(
+                  iconSize: 20,
+                  decoration:
+                      const InputDecoration(hintText: 'Product Category'),
+                  items: categories
+                      .map((category) => DropdownMenuItem(
+                          value: category, child: Text(category)))
+                      .toList(),
+                  onChanged: (value) {
+                    productController.newProduct.update(
+                      'category',
+                      (_) => value,
+                      ifAbsent: () => value,
+                    );
+                  },
                 ),
                 const SizedBox(height: 10),
                 _buildSlider('Price', 'price', productController,
@@ -122,7 +134,7 @@ class NewProductScreen extends StatelessWidget {
                       final productMap = productController.newProduct;
                       databaseService.addProduct(
                         Product(
-                          id: int.parse(productMap['id']),
+                          // id: productMap['id'],
                           name: productMap['name'],
                           category: productMap['category'],
                           description: productMap['description'],
@@ -133,6 +145,7 @@ class NewProductScreen extends StatelessWidget {
                           quantity: productMap['quantity'].toInt(),
                         ),
                       );
+                      Navigator.pop(context);
                     },
                   ),
                 )
